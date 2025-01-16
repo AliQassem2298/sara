@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:sara/generated/l10n.dart';
 import 'package:sara/helper/api.dart';
 import 'package:sara/models/profile_model.dart';
 import 'package:sara/services/update_profile_service.dart';
@@ -61,9 +62,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
             },
             icon: const Icon(Icons.keyboard_arrow_left, color: Colors.white),
           ),
-          title: const Text(
-            'Edit profile',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          title: Text(
+            S.of(context).Editprofile,
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold),
           ),
           backgroundColor: Colors.cyan,
         ),
@@ -76,20 +78,27 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 children: [
                   ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(300)),
-                    child: Image.network(
-                      '$baseUrlImage/${widget.user.data.image}',
-                      fit: BoxFit.cover,
-                      width: 150,
-                      height: 150,
-                    ),
+                    child: widget.user.data.image != null
+                        ? Image.network(
+                            '$baseUrlImage/${widget.user.data.image}',
+                            fit: BoxFit.cover,
+                            width: 150,
+                            height: 150,
+                          )
+                        : Image.asset(
+                            'images/1732817786.Default-Profile-Picture.png',
+                            fit: BoxFit.cover,
+                            width: 150,
+                            height: 150,
+                          ),
                   ),
                   const SizedBox(height: 16),
                   _buildTextField(
                     firstName,
-                    'first name',
+                    S.of(context).firstname,
                     (value) {
                       if (value == null || value.isEmpty) {
-                        return 'This field is required.';
+                        return S.of(context).This_field_is_required;
                       }
 
                       return null; // لا يوجد خطأ
@@ -98,10 +107,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   const SizedBox(height: 16),
                   _buildTextField(
                     lastName,
-                    'last name',
+                    S.of(context).LastName,
                     (value) {
                       if (value == null || value.isEmpty) {
-                        return 'This field is required.';
+                        return S.of(context).This_field_is_required;
                       }
 
                       return null; // لا يوجد خطأ
@@ -110,13 +119,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   const SizedBox(height: 16),
                   _buildTextField(
                     email,
-                    'email',
+                    S.of(context).email,
                     (value) {
                       if (value == null || value.isEmpty) {
-                        return 'This field is required.';
+                        return S.of(context).This_field_is_required;
                       }
                       if (!value.isEmail) {
-                        return 'Please enter an valid email address.';
+                        return S
+                            .of(context)
+                            .Please_enter_an_valid_email_address;
                       }
 
                       return null; // لا يوجد خطأ
@@ -125,10 +136,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   const SizedBox(height: 16),
                   _buildTextField(
                     userName,
-                    'username',
+                    S.of(context).username,
                     (value) {
                       if (value == null || value.isEmpty) {
-                        return 'This field is required.';
+                        return S.of(context).This_field_is_required;
                       }
 
                       return null; // لا يوجد خطأ
@@ -137,13 +148,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   const SizedBox(height: 16),
                   _buildTextField(
                     phone,
-                    'phone',
+                    S.of(context).phonenumber,
                     (value) {
                       if (value == null || value.isEmpty) {
-                        return 'This field is required.';
+                        return S.of(context).This_field_is_required;
                       }
                       if (value.length != 10 || !value.isPhoneNumber) {
-                        return 'You have to enter right number.';
+                        return S.of(context).You_have_to_enter_right_number;
                       }
                       return null; // لا يوجد خطأ
                     },
@@ -172,14 +183,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           );
 
                           // عرض رسالة نجاح
-                          Get.snackbar(
-                              'Hi', 'Information updated successfully');
+                          Get.snackbar(S.of(context).Hi,
+                              S.of(context).Informationupdatedsuccessfully);
 
                           // إرجاع المستخدم إلى صفحة البروفايل مع تحديث البيانات
                           Navigator.pop(context,
                               true); // تمرير true للإشارة إلى نجاح التحديث
                         } catch (e) {
-                          Get.snackbar('Sorry', e.toString(),
+                          Get.snackbar(S.of(context).Sorry, e.toString(),
                               colorText: Colors.white,
                               backgroundColor: Colors.red);
                         } finally {
@@ -187,8 +198,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         }
                       }
                     },
-                    child: const Text('Save changes',
-                        style: TextStyle(fontSize: 16)),
+                    child: Text(
+                      S.of(context).Savechanges,
+                      style: const TextStyle(fontSize: 16, color: Colors.white),
+                    ),
                   ),
                 ],
               ),

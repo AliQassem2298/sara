@@ -1,8 +1,9 @@
-// ignore_for_file: file_names, avoid_print
+// ignore_for_file: file_names, avoid_print, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:sara/generated/l10n.dart';
 import 'package:sara/screens/home%20page.dart';
 import 'package:sara/screens/login_page.dart';
 import 'package:sara/services/register_service.dart';
@@ -48,9 +49,9 @@ class _RegisterpageState extends State<Registerpage> {
           titleTextStyle:
               const TextStyle(textBaseline: TextBaseline.ideographic),
           backgroundColor: Colors.cyan,
-          title: const Text(
-            'WELCOME SIGN UP',
-            style: TextStyle(fontSize: 20),
+          title: Text(
+            S.of(context).WELCOME_SIGN_UP,
+            style: const TextStyle(fontSize: 20),
           ),
         ),
         body: Form(
@@ -66,13 +67,13 @@ class _RegisterpageState extends State<Registerpage> {
                   child: CustomTextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'This field is required.';
+                        return S.of(context).This_field_is_required;
                       }
 
                       return null; // لا يوجد خطأ
                     },
                     textEditingController: firstName,
-                    hintText: 'FirstName',
+                    hintText: S.of(context).FirstName,
                     icon: const Icon(Icons.person),
                     iconEnd: null,
                     isPassword: false,
@@ -82,13 +83,13 @@ class _RegisterpageState extends State<Registerpage> {
                   child: CustomTextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'This field is required.';
+                        return S.of(context).This_field_is_required;
                       }
 
                       return null; // لا يوجد خطأ
                     },
                     textEditingController: lastName,
-                    hintText: 'LastName',
+                    hintText: S.of(context).LastName,
                     icon: const Icon(Icons.person),
                     iconEnd: null,
                     isPassword: false,
@@ -98,15 +99,15 @@ class _RegisterpageState extends State<Registerpage> {
                 child: CustomTextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'This field is required.';
+                      return S.of(context).This_field_is_required;
                     }
                     if (value.length != 10 || !value.isPhoneNumber) {
-                      return 'You have to enter right number.';
+                      return S.of(context).You_have_to_enter_right_number;
                     }
                     return null; // لا يوجد خطأ
                   },
                   textEditingController: phone,
-                  hintText: 'YourNamber',
+                  hintText: S.of(context).YourNamber,
                   icon: const Icon(Icons.phone),
                   iconEnd: null,
                   isPassword: false,
@@ -118,15 +119,15 @@ class _RegisterpageState extends State<Registerpage> {
                 child: CustomTextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'This field is required.';
+                      return S.of(context).This_field_is_required;
                     }
                     if (!value.isEmail) {
-                      return 'Please enter an valid email address.';
+                      return S.of(context).Please_enter_an_valid_email_address;
                     }
                     return null; // لا يوجد خطأ
                   },
                   textEditingController: email,
-                  hintText: 'YourEmail',
+                  hintText: S.of(context).email,
                   icon: const Icon(Icons.email),
                   iconEnd: null,
                   isPassword: false,
@@ -138,13 +139,13 @@ class _RegisterpageState extends State<Registerpage> {
                 child: CustomTextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'This field is required.';
+                      return S.of(context).This_field_is_required;
                     }
 
                     return null; // لا يوجد خطأ
                   },
                   textEditingController: userName,
-                  hintText: 'UserName',
+                  hintText: S.of(context).UserName,
                   icon: const Icon(Icons.person),
                   iconEnd: null,
                   isPassword: false,
@@ -155,13 +156,13 @@ class _RegisterpageState extends State<Registerpage> {
                 child: CustomTextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'This field is required.';
+                      return S.of(context).This_field_is_required;
                     }
 
                     return null; // لا يوجد خطأ
                   },
                   textEditingController: mylocation,
-                  hintText: 'Location',
+                  hintText: S.of(context).Location,
                   icon: const Icon(Icons.location_city),
                   iconEnd: null,
                   isPassword: false,
@@ -172,13 +173,13 @@ class _RegisterpageState extends State<Registerpage> {
                 child: CustomTextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'This field is required.';
+                      return S.of(context).This_field_is_required;
                     }
 
                     return null; // لا يوجد خطأ
                   },
                   textEditingController: password,
-                  hintText: 'YourPassword',
+                  hintText: S.of(context).password,
                   icon: const Icon(Icons.lock_open_sharp),
                   iconEnd: const Icon(Icons.visibility_off),
                   isPassword: true,
@@ -189,25 +190,25 @@ class _RegisterpageState extends State<Registerpage> {
                 child: CustomTextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'This field is required.';
+                      return S.of(context).This_field_is_required;
                     }
                     if (value.length < 8) {
-                      return 'The password must be more than 8.';
+                      return S.of(context).The_password_must_be_more_than_8;
                     }
                     if (password.text != passwordConfirmation.text) {
-                      return 'Passwords didn\'t match';
+                      return S.of(context).Passwords_didnt_match;
                     }
                     return null; // لا يوجد خطأ
                   },
                   textEditingController: passwordConfirmation,
-                  hintText: 'ConfirmYourPassword',
+                  hintText: S.of(context).ConfirmYourPassword,
                   icon: const Icon(Icons.lock),
                   iconEnd: const Icon(Icons.visibility_off),
                   isPassword: true,
                 ),
               ),
               CustomButton(
-                text: 'Sign Up',
+                text: S.of(context).Sign_Up,
                 onPressed: () async {
                   if (formState.currentState!.validate()) {
                     loadingIndicatorTrue();
@@ -225,14 +226,14 @@ class _RegisterpageState extends State<Registerpage> {
                       print('Success');
                       loadingIndicatorFalse();
                       Get.snackbar(
-                        'Hi',
-                        'User created successfully',
+                        S.of(context).Hi,
+                        S.of(context).User_created_successfully,
                       );
                       Get.off(() => const HomePage());
                     } catch (e) {
                       print(e.toString());
                       Get.snackbar(
-                        'Sorry',
+                        S.of(context).Sorry,
                         e.toString(),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,
@@ -245,17 +246,17 @@ class _RegisterpageState extends State<Registerpage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Text('Have account? '),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Text(S.of(context).Have_account),
                   ),
                   InkWell(
                     onTap: () {
                       Get.offAll(() => const Loginpage());
                     },
-                    child: const Text(
-                      'LOGIN',
-                      style: TextStyle(
+                    child: Text(
+                      S.of(context).Login,
+                      style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w500,
                       ),

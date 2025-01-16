@@ -26,7 +26,7 @@ class ProfileData {
   final String email;
   final String phone;
   final String address;
-  final String image;
+  final String? image;
 
   ProfileData({
     required this.id,
@@ -48,7 +48,7 @@ class ProfileData {
       email: json['email'] as String,
       phone: json['phone'] as String,
       address: json['address'] as String,
-      image: json['image_url'] as String,
+      image: json['image_url'],
     );
   }
 }

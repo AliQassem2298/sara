@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:sara/generated/l10n.dart';
 import 'package:sara/services/update_location_service.dart';
 import 'package:sara/widgets/custom_textFormfield.dart';
 
@@ -35,7 +36,7 @@ class _UpdateAdressPageState extends State<UpdateAdressPage> {
       inAsyncCall: isLoading.value,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Update Your Adress"),
+          title: Text(S.of(context).UpdateAdress),
         ),
         body: Form(
           key: formState,
@@ -44,14 +45,14 @@ class _UpdateAdressPageState extends State<UpdateAdressPage> {
               CustomTextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'This field is required.';
+                    return S.of(context).This_field_is_required;
                   }
 
                   return null; // لا يوجد خطأ
                 },
                 textEditingController: location,
-                validateName: "location",
-                hintText: 'Location',
+                validateName: S.of(context).Location,
+                hintText: S.of(context).Location,
                 icon: const Icon(Icons.location_on),
                 iconEnd: null,
                 isPassword: false,
@@ -78,15 +79,15 @@ class _UpdateAdressPageState extends State<UpdateAdressPage> {
                           print('Success');
                           loadingIndicatorFalse();
                           Get.snackbar(
-                            'Hi',
-                            'Location updated successfully',
+                            S.of(context).Hi,
+                            S.of(context).Locationupdatedsuccessfully,
                           );
                           Navigator.pop(context,
                               true); // تمرير true للإشارة إلى نجاح التحديث
                         } catch (e) {
                           print(e.toString());
                           Get.snackbar(
-                            'Sorry',
+                            S.of(context).Sorry,
                             e.toString(),
                             colorText: Colors.white,
                             backgroundColor: Colors.red,
@@ -95,9 +96,9 @@ class _UpdateAdressPageState extends State<UpdateAdressPage> {
                         loadingIndicatorFalse();
                       }
                     },
-                    child: const Text(
-                      'Save Adress',
-                      style: TextStyle(fontSize: 16),
+                    child: Text(
+                      S.of(context).SaveAdress,
+                      style: const TextStyle(fontSize: 16, color: Colors.white),
                     ),
                   ),
                 ],

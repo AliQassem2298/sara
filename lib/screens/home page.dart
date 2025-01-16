@@ -1,12 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api, file_names, avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:sara/main.dart';
-import 'package:sara/screens/Categories%20page.dart';
-import 'package:sara/screens/Favourite%20page.dart';
-import 'package:sara/services/logout_service.dart';
-import 'package:sara/widgets/Custom_Drawer.dart';
-import 'package:sara/widgets/Home_Page%20widget.dart';
+import 'package:sara/generated/l10n.dart';
+import 'package:sara/screens/cart_page.dart';
+import 'package:sara/screens/home_content_page.dart';
+import 'package:sara/screens/my_order.dart';
+import 'package:sara/screens/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,36 +17,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final List<Widget> _pages = [
-    const HomePageWidget(),
-    const OrdersPage(),
+    const HomeContentPage(),
+    const ShowOrdersPage(),
     const CartPage(),
-    const FavoritesPage(),
-    const CategoriesPage(),
+    const ProfilePage(),
+    // const FavoritesPage(),
+    // const CategoriesPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.cyan,
-        title: const Text('new trend '),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () async {
-              print(sharedPreferences!.getString("token"));
-              await LogoutService().logout();
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () {
-              sharedPreferences!.clear();
-            },
-          ),
-        ],
-      ),
-      drawer: const CustomDrawer(),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
@@ -56,27 +36,27 @@ class _HomePageState extends State<HomePage> {
             _selectedIndex = index;
           });
         },
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: const Icon(Icons.home),
+            label: S.of(context).Home,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag),
-            label: 'Orders',
+            icon: const Icon(Icons.shopping_bag),
+            label: S.of(context).Orders,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
+            icon: const Icon(Icons.shopping_cart),
+            label: S.of(context).Cart,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorites',
+            icon: const Icon(Icons.person_4),
+            label: S.of(context).Profile,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.apps),
-            label: 'Category',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.apps),
+          //   label: 'Category',
+          // ),
         ],
         backgroundColor: Colors.black,
         selectedItemColor: Colors.black,

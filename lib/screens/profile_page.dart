@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sara/generated/l10n.dart';
 import 'package:sara/helper/api.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sara/screens/EditProfilePage.dart';
@@ -43,11 +44,12 @@ class _ProfilePageState extends State<ProfilePage> {
     });
     try {
       final response = await UploadImageService().uploadProfileImage(imageFile);
-      Get.snackbar(
-          'Success', 'Image uploaded successfully: ${response.message}');
+      Get.snackbar(S.of(context).Success,
+          '${S.of(context).Image_uploaded_successfully}: ${response.message}');
     } catch (e) {
       print(e);
-      Get.snackbar('Error', 'Failed to upload image: $e');
+      Get.snackbar(
+          S.of(context).Error, '${S.of(context).Failedtouploadimage}: $e');
     } finally {
       setState(() {
         isUploading = false;
@@ -72,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan,
-        title: const Text('Profile Page'),
+        title: Text(S.of(context).Profile),
       ),
       body: FutureBuilder<ProfileModel>(
         future: _profileFuture,
@@ -82,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
           } else if (snapshot.hasError) {
             return Center(
               child: Text(
-                'Error: ${snapshot.error}',
+                '$Error: ${snapshot.error}',
                 style: const TextStyle(color: Colors.red),
               ),
             );
@@ -92,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
             return _buildProfileContent(profile.data);
           } else {
-            return const Center(child: Text('No data available'));
+            return Center(child: Text(S.of(context).Nodataavailable));
           }
         },
       ),
@@ -133,15 +135,22 @@ class _ProfilePageState extends State<ProfilePage> {
                       ? Image.file(
                           _file!,
                           fit: BoxFit.cover,
-                          width: 200,
-                          height: 200,
-                        )
-                      : Image.network(
-                          '$baseUrlImage/${data.image}',
-                          fit: BoxFit.cover,
                           width: 150,
                           height: 150,
-                        ),
+                        )
+                      : data.image == null
+                          ? Image.asset(
+                              'images/1732817786.Default-Profile-Picture.png',
+                              fit: BoxFit.cover,
+                              width: 150,
+                              height: 150,
+                            )
+                          : Image.network(
+                              '$baseUrlImage/${data.image}',
+                              fit: BoxFit.cover,
+                              width: 150,
+                              height: 150,
+                            ),
                 ),
                 Positioned(
                   bottom: -10,
@@ -172,24 +181,28 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(height: 30),
           Profileinfofield(
               icon: Icons.person_outline,
-              title: 'first name :',
+              title: '${S.of(context).firstname} :',
               value: data.firstName),
           Profileinfofield(
               icon: Icons.person_outline,
-              title: 'last name :',
+              title: '${S.of(context).lastname} :',
               value: data.lastName),
           Profileinfofield(
               icon: Icons.person_outline,
-              title: 'user name :',
+              title: '${S.of(context).username} :',
               value: data.userName),
           Profileinfofield(
-              icon: Icons.email, title: 'E_mail :', value: data.email),
+              icon: Icons.email,
+              title: '${S.of(context).email} :',
+              value: data.email),
           Profileinfofield(
               icon: Icons.location_on,
-              title: 'location :',
+              title: '${S.of(context).Location} :',
               value: data.address),
           Profileinfofield(
-              icon: Icons.phone, title: 'phone number :', value: data.phone),
+              icon: Icons.phone,
+              title: '${S.of(context).phonenumber} :',
+              value: data.phone),
           const SizedBox(height: 30),
           // Text(
           //   isArabic ? 'اللغة' : 'Language',
@@ -215,9 +228,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 });
               }
             },
-            child: const Text(
-              'Update Adress',
-              style: TextStyle(fontSize: 16),
+            child: Text(
+              S.of(context).UpdateAdress,
+              style: const TextStyle(fontSize: 16, color: Colors.white),
             ),
           ),
         ],

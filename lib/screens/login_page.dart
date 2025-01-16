@@ -1,6 +1,7 @@
-// ignore_for_file: must_be_immutable, avoid_print
+// ignore_for_file: must_be_immutable, avoid_print, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:sara/generated/l10n.dart';
 import 'package:sara/screens/home%20page.dart';
 import 'package:sara/screens/registerPage.dart';
 import 'package:sara/services/login_service.dart';
@@ -35,6 +36,10 @@ class _LoginpageState extends State<Loginpage> {
 
   TextEditingController password = TextEditingController();
 
+  void changeLanguage(Locale locale) {
+    Get.updateLocale(locale);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
@@ -50,22 +55,22 @@ class _LoginpageState extends State<Loginpage> {
                 children: [
                   const SizedBox(
                     height: 10,
-                    // width:  MediaQuery.of(context).size.width,
                   ),
                   CustomTextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'This field is required.';
+                        return S.of(context).This_field_is_required;
                       }
                       if (!value.isEmail) {
-                        return 'Please enter an valid email address.';
+                        return S
+                            .of(context)
+                            .Please_enter_an_valid_email_address;
                       }
-
-                      return null; // لا يوجد خطأ
+                      return null;
                     },
                     textEditingController: email,
-                    validateName: "email",
-                    hintText: 'Email',
+                    validateName: S.of(context).email,
+                    hintText: S.of(context).email,
                     icon: const Icon(Icons.email_outlined),
                     iconEnd: null,
                     isPassword: false,
@@ -74,15 +79,15 @@ class _LoginpageState extends State<Loginpage> {
                   CustomTextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'This field is required.';
+                        return S.of(context).This_field_is_required;
                       }
                       if (value.length < 8) {
-                        return 'The password must be more than 8.';
+                        return S.of(context).The_password_must_be_more_than_8;
                       }
-                      return null; // لا يوجد خطأ
+                      return null;
                     },
                     textEditingController: password,
-                    hintText: 'password',
+                    hintText: S.of(context).password,
                     icon: const Icon(Icons.lock),
                     iconEnd: const Icon(Icons.visibility_off),
                     isPassword: true,
@@ -91,7 +96,7 @@ class _LoginpageState extends State<Loginpage> {
                     height: 20,
                   ),
                   CustomButton(
-                    text: 'Login',
+                    text: S.of(context).Login,
                     onPressed: () async {
                       if (formState.currentState!.validate()) {
                         loadingIndicatorTrue();
@@ -104,14 +109,14 @@ class _LoginpageState extends State<Loginpage> {
                           print('Success');
                           loadingIndicatorFalse();
                           Get.snackbar(
-                            'Hi',
-                            'User logged in successfully',
+                            S.of(context).Hi,
+                            S.of(context).User_logged_in_successfully,
                           );
                           Get.off(() => const HomePage());
                         } catch (e) {
                           print(e.toString());
                           Get.snackbar(
-                            'Sorry',
+                            S.of(context).Sorry,
                             e.toString(),
                             colorText: Colors.white,
                             backgroundColor: Colors.red,
@@ -124,19 +129,51 @@ class _LoginpageState extends State<Loginpage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20),
-                        child: Text('Don\'t have an account? '),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Text(S.of(context).Dont_have_an_account),
                       ),
                       InkWell(
                         onTap: () {
                           Get.offAll(() => const Registerpage());
                         },
-                        child: const Text(
-                          'REGISTER',
-                          style: TextStyle(
+                        child: Text(
+                          S.of(context).REGISTER,
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // زر تغيير اللغة
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          changeLanguage(const Locale('en'));
+                        },
+                        child: Text(
+                          'English',
+                          style: TextStyle(
+                            color: Get.locale?.languageCode == 'en'
+                                ? Colors.blue
+                                : Colors.black,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          changeLanguage(const Locale('ar'));
+                        },
+                        child: Text(
+                          'العربية',
+                          style: TextStyle(
+                            color: Get.locale?.languageCode == 'ar'
+                                ? Colors.blue
+                                : Colors.black,
                           ),
                         ),
                       ),
